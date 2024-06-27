@@ -16,7 +16,7 @@ const Cart = ({ cartItems, onRemove }) => {
   return (
     <div className="cart">
       <h2>Cart</h2>
-      <div>
+      <div className="cart-cont">
         {cartItems.map((item) => (
           <div
             style={{

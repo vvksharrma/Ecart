@@ -1,35 +1,40 @@
 import React, { useEffect, useState } from "react";
 import Product from "../Components/Product";
-import '../styles.css'
+import "../styles.css";
 import axios from "axios";
 
-export default function HomePage({onAdd}) {
+export default function HomePage({ onAdd }) {
   const [products, setProducts] = useState([]);
-  const [loading,setLoading]=useState(true)
-  
-  useEffect(()=>{
-    async function fetchProducts(){
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchProducts() {
       try {
-        const response = await axios.get('https://fakestoreapi.com/products');
+        const response = await axios.get("https://fakestoreapi.com/products");
         setProducts(response.data);
-        setLoading(false)
+        setLoading(false);
       } catch (error) {
-        console.log("Error fetching Data",error)
+        setError(error.message);
+        console.log("Error fetching Data", error);
       }
     }
-    fetchProducts()
-  },[])
+    fetchProducts();
+  }, []);
 
   return (
     <div className="home">
       <h2>Products</h2>
-      {loading?(<div style={{marginTop:'200px'}}>Loading...</div>):(
-
-      <div className="product-list">
-        {products.map((product) => (
-          <Product product={product} onAdd={()=>onAdd(product)}/>
-        ))} 
-      </div>
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>Error: {error}</div>
+      ) : (
+        <div className="product-list">
+          {products.map((product) => (
+            <Product product={product} onAdd={() => onAdd(product)} />
+          ))}
+        </div>
       )}
     </div>
   );

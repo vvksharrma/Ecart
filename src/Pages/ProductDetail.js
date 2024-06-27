@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../styles.css";
 
-const ProductDetail = () => {
+const ProductDetail = ({onAdd}) => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,7 +47,7 @@ const ProductDetail = () => {
                 <span>{[...Array(roundedRating)].map((_,i)=><>⭐</>)}</span>
               </p>
 
-              <button>Add to Cart</button>
+              <button onClick={()=>onAdd(product)}>Add to Cart</button>
             </div>
           </div>
         </div>
